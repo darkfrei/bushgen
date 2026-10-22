@@ -282,22 +282,22 @@ local function drawLeaf(c, lf, body, mixBody)
 			local best, bu, bside, bk, bt = 1e9, 0, 0, 0, 0
 			for k = 0, LEAF_SEGS - 1 do
 				if px >= sbx0[k] and px <= sbx1[k] and py >= sby0[k] and py <= sby1[k] then
-					local ax, ay = sx[k], sy[k]
-					local ex, ey = sx[k + 1] - ax, sy[k + 1] - ay
-					local ll = ex * ex + ey * ey
-					local t = 0
-					if ll > 1e-9 then
-						t = ((px - ax) * ex + (py - ay) * ey) / ll
-						t = max(0, min(1, t))
-					end
-					local qx, qy = ax + ex * t - px, ay + ey * t - py
-					local d = qx * qx + qy * qy
-					if d < best then
-						best = d
-						bu = (k + t) / LEAF_SEGS
-						bside = ex * (py - ay) - ey * (px - ax)
-						bk, bt = k, t
-					end
+				local ax, ay = sx[k], sy[k]
+				local ex, ey = sx[k + 1] - ax, sy[k + 1] - ay
+				local ll = ex * ex + ey * ey
+				local t = 0
+				if ll > 1e-9 then
+					t = ((px - ax) * ex + (py - ay) * ey) / ll
+					t = max(0, min(1, t))
+				end
+				local qx, qy = ax + ex * t - px, ay + ey * t - py
+				local d = qx * qx + qy * qy
+				if d < best then
+					best = d
+					bu = (k + t) / LEAF_SEGS
+					bside = ex * (py - ay) - ey * (px - ax)
+					bk, bt = k, t
+				end
 				end
 			end
 			local dist = sqrt(best)
@@ -335,7 +335,7 @@ local function drawLeaf(c, lf, body, mixBody)
 				end
 				-- glossy spot on the lit half of broad leaves
 				if lf.spot and abs(bu - 0.4) < 0.12 and across > 0.2 and across < 0.7
-				and px2 * LX + py2 * LY > 0 then
+					and px2 * LX + py2 * LY > 0 then
 					sh = sh + lf.spot
 				end
 				local d = dep[bk] + (dep[bk + 1] - dep[bk]) * bt
@@ -443,9 +443,9 @@ local function makeBlob(c, p, cx, cy, R, zbase, nClumps, salt)
 		local py = cy + sin(ang) * rad * sq
 		local zs = sqrt(max(0, R * R - rad * rad))
 		drawSphere(c, {
-				cx = px, cy = py, cz = zbase + zs - lr * 0.7,
-				r = lr, sq = p.clumpSquash or 0.9, tone = tone,
-				}, body, p.bodyMix or 0.3)
+			cx = px, cy = py, cz = zbase + zs - lr * 0.7,
+			r = lr, sq = p.clumpSquash or 0.9, tone = tone,
+		}, body, p.bodyMix or 0.3)
 	end
 end
 
@@ -470,9 +470,9 @@ local function genSphere(c, r, p)
 		local lr = rrange(e, p.clumpRadius[1], p.clumpRadius[2]) * fade(n, k)
 		local rad = R - lr * 0.8
 		drawSphere(c, {
-				cx = cx + cos(ang) * rad, cy = cy + sin(ang) * rad * p.squash,
-				cz = lr * 0.2, r = lr, sq = 0.9, tone = 0,
-				}, body, 0.85)
+			cx = cx + cos(ang) * rad, cy = cy + sin(ang) * rad * p.squash,
+			cz = lr * 0.2, r = lr, sq = 0.9, tone = 0,
+		}, body, 0.85)
 	end
 end
 
@@ -527,12 +527,12 @@ local function genLeafy(c, r, p)
 		local cw = min(1, rad / (R * 0.2))
 		local out = (ang + jitter) * cw + free * (1 - cw)
 		drawLeaf(c, {
-				x = bx, y = by, a = out, len = len, width = width,
-				lift = 0.5, arc = 1, droop = 0.8, fy = sq,
-				dep0 = zs, depDir = 0.3,
-				serration = 0, teeth = 1, blade = false, fold = p.fold or 0.45,
-				tone = tone, spot = p.spot,
-				}, body, 0.4)
+			x = bx, y = by, a = out, len = len, width = width,
+			lift = 0.5, arc = 1, droop = 0.8, fy = sq,
+			dep0 = zs, depDir = 0.3,
+			serration = 0, teeth = 1, blade = false, fold = p.fold or 0.45,
+			tone = tone, spot = p.spot,
+		}, body, 0.4)
 	end
 end
 
@@ -549,16 +549,16 @@ local function genRosette(c, r, p)
 		local a = a0 + k * golden + rrange(e, -0.25, 0.25)
 		local len = rrange(e, p.leafLength[1], p.leafLength[2]) * (1 - (p.innerShrink or 0.35) * inner) * f
 		drawLeaf(c, {
-				x = cx + rrange(e, -0.6, 0.6), y = cy + rrange(e, -0.6, 0.6),
-				a = a, len = len,
-				width = rrange(e, p.leafWidth[1], p.leafWidth[2]) * (0.4 + 0.6 * f),
-				lift = rrange(e, p.lift[1], p.lift[2]) * (1 + 0.6 * inner),
-				arc = rrange(e, p.arc[1], p.arc[2]),
-				droop = p.droop or 1.0, fy = p.foreshorten,
-				dep0 = inner * 2, depDir = 1,
-				serration = p.serration or 0, teeth = p.teeth or 1,
-				blade = false, tone = partTone(e, p), fold = p.fold or 0.45, spot = p.spot,
-				}, nil, 0)
+			x = cx + rrange(e, -0.6, 0.6), y = cy + rrange(e, -0.6, 0.6),
+			a = a, len = len,
+			width = rrange(e, p.leafWidth[1], p.leafWidth[2]) * (0.4 + 0.6 * f),
+			lift = rrange(e, p.lift[1], p.lift[2]) * (1 + 0.6 * inner),
+			arc = rrange(e, p.arc[1], p.arc[2]),
+			droop = p.droop or 1.0, fy = p.foreshorten,
+			dep0 = inner * 2, depDir = 1,
+			serration = p.serration or 0, teeth = p.teeth or 1,
+			blade = false, tone = partTone(e, p), fold = p.fold or 0.45, spot = p.spot,
+		}, nil, 0)
 	end
 end
 
@@ -598,12 +598,12 @@ local function genFern(c, r, p)
 				local ll = (p.leafletLength * (1 - u) ^ 0.6 + 1.2) * fade(steps, j)
 				for side = -1, 1, 2 do
 					drawLeaf(c, {
-							id = fid, x = bx, y = by, a = frond.a + side * 1.05,
-							len = ll, width = p.leafletWidth,
-							lift = 0.3, arc = 1, droop = 0.4, fy = p.foreshorten,
-							dep0 = bd + 0.2, depDir = 0.2,
-							serration = 0, teeth = 1, blade = false, tone = 0, fold = p.fold or 0.45,
-							}, nil, 0)
+						id = fid, x = bx, y = by, a = frond.a + side * 1.05,
+						len = ll, width = p.leafletWidth,
+						lift = 0.3, arc = 1, droop = 0.4, fy = p.foreshorten,
+						dep0 = bd + 0.2, depDir = 0.2,
+						serration = 0, teeth = 1, blade = false, tone = 0, fold = p.fold or 0.45,
+					}, nil, 0)
 				end
 			end
 		end
@@ -633,9 +633,9 @@ local function genHedge(c, r, p)
 		px = px + cos(ang) * rad * 0.5
 		local zs = sqrt(max(0, R * R - rad * rad))
 		drawSphere(c, {
-				cx = px, cy = py, cz = zs - lr * 0.7,
-				r = lr, sq = p.clumpSquash or 0.9, tone = tone,
-				}, body, p.bodyMix or 0.3)
+			cx = px, cy = py, cz = zs - lr * 0.7,
+			r = lr, sq = p.clumpSquash or 0.9, tone = tone,
+		}, body, p.bodyMix or 0.3)
 	end
 	growBranches(c, cx, cy + R * sq - 1, halfLen * 0.7, R * sq * 1.6, 2 + floor(hashU(c.seed, 1, 41) * 2))
 end
@@ -650,17 +650,17 @@ local function genTuft(c, r, p)
 		local a = rrange(e, 0, 2 * pi)
 		local off = rrange(e, 0, spread)
 		drawLeaf(c, {
-				x = cx + cos(a) * off, y = cy + sin(a) * off * 0.5,
-				a = a + rrange(e, -0.3, 0.3),
-				len = rrange(e, p.leafLength[1], p.leafLength[2]) * f,
-				width = rrange(e, p.leafWidth[1], p.leafWidth[2]),
-				lift = rrange(e, p.lift[1], p.lift[2]) * f,
-				arc = rrange(e, p.arc[1], p.arc[2]),
-				droop = rrange(e, 0, 3), fy = p.foreshorten,
-				dep0 = p.dep0 or 0, depDir = 1,
-				serration = 0, teeth = 1, blade = true, fold = 0.45,
-				tone = (k % 3 == 0) and -1 or 0,
-				}, nil, 0)
+			x = cx + cos(a) * off, y = cy + sin(a) * off * 0.5,
+			a = a + rrange(e, -0.3, 0.3),
+			len = rrange(e, p.leafLength[1], p.leafLength[2]) * f,
+			width = rrange(e, p.leafWidth[1], p.leafWidth[2]),
+			lift = rrange(e, p.lift[1], p.lift[2]) * f,
+			arc = rrange(e, p.arc[1], p.arc[2]),
+			droop = rrange(e, 0, 3), fy = p.foreshorten,
+			dep0 = p.dep0 or 0, depDir = 1,
+			serration = 0, teeth = 1, blade = true, fold = 0.45,
+			tone = (k % 3 == 0) and -1 or 0,
+		}, nil, 0)
 	end
 end
 

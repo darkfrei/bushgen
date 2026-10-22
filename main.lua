@@ -125,7 +125,7 @@ local function buildMazeTiles()
 			local cx, cy = i * T + T / 2, j * T + T / 2
 			if isWall(i, j) then
 				addTile({cx = cx, cy = cy, style = st, seed = world * 7777 + j * 131 + i,
-						block = {shape = "square", tile = T, height = maze.squareHeight, join = joinOf(i, j)}})
+					block = {shape = "square", tile = T, height = maze.squareHeight, join = joinOf(i, j)}})
 			else
 				floorCells[#floorCells + 1] = {kind = "square", x = cx, y = cy, odd = (i + j) % 2 == 1}
 			end
@@ -448,7 +448,7 @@ function love.draw()
 	local state = playing and (dir > 0 and "play" or "play back") or "pause"
 	local styleInfo = (mode == "maze" or mode == "focus") and ("   style " .. selected) or ""
 	love.graphics.print(string.format("%s%s   t %.2f   speed %.4f   %s   world %d   zoom %dx   sprite %d",
-			mode, styleInfo, t, speed, state, world, s, SPRITE), 10, h - 22)
+		mode, styleInfo, t, speed, state, world, s, SPRITE), 10, h - 22)
 	if showHelp then
 		love.graphics.print("space play/pause   left/right rewind/forward (shift faster)   r reverse   home t=0   +/- speed\n"
 			.. "up/down style   m focus style   b maze   tab presets   n new world   [ ] sprite size   s save sheet   e save x5   f fit   wheel zoom, drag move   h help",
