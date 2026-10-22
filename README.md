@@ -24,13 +24,11 @@ LÖVE and a viewer to browse styles.
 
 Copy these into your game:
 
-| file | what it is |
-|---|---|
-| `bushgen.lua` | the generator: recipe in, pixels out (pure Lua) |
-| `variety.lua` | makes recipes: styles, plants, cubes; `request` |
-| `data_plants.lua` | base presets of all kinds, including `cube` |
-| `data_variety.lua` | random ranges for styles and plants |
-| `bushlove.lua` | optional: turns results into LÖVE images |
+- `bushgen.lua` is the generator: a recipe goes in, pixels come out (pure Lua).
+- `variety.lua` makes recipes for styles, plants and cubes, and has `request`.
+- `data_plants.lua` holds the base presets of all kinds.
+- `data_variety.lua` holds the random ranges for styles and plants.
+- `bushlove.lua` is optional and turns results into LÖVE images.
 
 Viewer only (not needed in a game): `main.lua`, `conf.lua`, `data_maze.lua`.
 README pictures: `images/`. Every picture here was rendered with exactly the
