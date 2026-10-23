@@ -3,6 +3,7 @@
 Procedural pixel art bushes, plants and hedge blocks for LÖVE games.
 Pure Lua generator (no LÖVE needed to generate), plus a small helper for
 LÖVE and a viewer to browse styles.
+Based on https://github.com/darkfrei/love2d-lua-tests/tree/main/bushgen
 
 ![a mix of kinds and styles](images/hero.png)
 
